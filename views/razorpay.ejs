@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Internship Project</title>
+    <link rel="stylesheet" href="https://unpkg.com/bulma@0.9.0/css/bulma.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  </head>
+
+  <body>
+
+		<section class="hero is-link is-fullheight">
+			<div class="hero-body is-centered">
+				<div class="container">
+					<div class="columns is-centered is-vcentered">
+						
+						<div class="column is-6">
+							<p class="title is-size-1">The Sparks Foundation</p>
+							<p class="subtitle is-size-4">Donate ₹1 for a life saving cause</p>
+
+							<button class="button is-link is-light is-medium" id="rzp-button1">Proceed to Pay</button>
+						</div>
+					
+						<div class="column is-5">
+							<figure class="image">
+								
+								<img src="https://internship.thesparksfoundation.info/assests/img/logo.png" 
+								style="border-radius: 10px" alt="">
+
+							</figure>
+						</div>
+
+					</div>
+				</div>
+			</div>
+	</section>
+    <script>
+    axios.post('/order').then((info) => {
+        console.log(info)
+
+    var options = {
+    "key": "rzp_test_8TMtdQkjOZoA0H",
+    "amount": "1 * 100",
+    "currency": "INR",
+    "name": "The Sparks Foundation",
+    "description": "Donation",
+    "image": "https://internship.thesparksfoundation.info/assests/img/logo.png",
+    "order_id": info.data.id,
+    "callback_url": '/is-order-complete',
+    
+    "notes": {
+        "address": "Razorpay Corporate Office"
+    },
+    "theme": {
+        "color": "#3399cc"
+    }
+    };
+    var rzp1 = new Razorpay(options);
+    document.getElementById('rzp-button1').onclick = function(e){
+        rzp1.open();
+        e.preventDefault();
+    }
+
+    })
+
+    </script>
+
+  </body>
+
+</html>
